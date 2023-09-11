@@ -10,15 +10,35 @@ const ProductPage = () => {
   });
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [editIndex, setEditIndex] = useState(null);
 
   const handleAddProduct = () => {
-    setProducts([...products, newProduct]);
+    if (editIndex !== null) {
+      const updatedProducts = [...products];
+      updatedProducts[editIndex] = newProduct;
+      setProducts(updatedProducts);
+      setEditIndex(null);
+    } else {
+      setProducts([...products, newProduct]);
+    }
     setNewProduct({ title: "", description: "", price: "", image: "" });
   };
 
   const handleAddToCart = (product) => {
     setCart([...cart, product]);
     setTotalPrice(totalPrice + parseFloat(product.price));
+  };
+
+  const handleEditProduct = (index) => {
+    setEditIndex(index);
+    const selectedProduct = products[index];
+    setNewProduct({ ...selectedProduct });
+  };
+
+  const handleDeleteProduct = (index) => {
+    const updatedProducts = [...products];
+    updatedProducts.splice(index, 1);
+    setProducts(updatedProducts);
   };
 
   const handleRemoveFromCart = (index) => {
@@ -75,7 +95,7 @@ const ProductPage = () => {
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
             onClick={handleAddProduct}
           >
-            Add
+            {editIndex !== null ? "Update" : "Add"}
           </button>
         </div>
       </div>
@@ -102,10 +122,22 @@ const ProductPage = () => {
               </div>
               <div>
                 <button
-                  className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                  className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 mr-2"
                   onClick={() => handleAddToCart(product)}
                 >
                   Add to Cart
+                </button>
+                <button
+                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 mr-2"
+                  onClick={() => handleEditProduct(index)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
+                  onClick={() => handleDeleteProduct(index)}
+                >
+                  Delete
                 </button>
               </div>
             </li>
