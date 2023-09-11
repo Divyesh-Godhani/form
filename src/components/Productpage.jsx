@@ -39,7 +39,7 @@ const ProductPage = () => {
       } else if (!isProductDuplicate) {
         setProducts([...products, newProduct]);
       } else {
-        alert("This product is already exists.");
+        alert("This product is already exits.");
       }
       setNewProduct({ title: "", description: "", price: "", image: "" });
     } else {
@@ -103,7 +103,7 @@ const ProductPage = () => {
             }
           />
           <input
-            type="text"
+            type="number"
             placeholder="Product Price"
             className="mr-2 px-2 py-1 border rounded"
             value={newProduct.price}
@@ -112,7 +112,7 @@ const ProductPage = () => {
             }
           />
           <input
-            type="text"
+            type="url"
             placeholder="Product Image URL"
             className="mr-2 px-2 py-1 border rounded"
             value={newProduct.image}
