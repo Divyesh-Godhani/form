@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -11,6 +11,15 @@ const ProductPage = () => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [editIndex, setEditIndex] = useState(null);
+
+  useEffect(() => {
+    const storeproducts = JSON.parse(localStorage.getItem("products")) || [];
+    setProducts(storeproducts);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
 
   const handleAddProduct = () => {
     if (editIndex !== null) {
