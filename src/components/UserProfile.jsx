@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import product from "../data/product";
 
 export default function UserProfile() {
   const [users, setUsers] = useState(
@@ -24,6 +25,10 @@ export default function UserProfile() {
     setUsers(updatedUsers);
   };
 
+  const handleaddtocart = (item) => {
+    console.log(item);
+  };
+
   return (
     <div>
       <h1>User Profile</h1>
@@ -39,6 +44,31 @@ export default function UserProfile() {
             </div>
             <div>First Name: {user.firstName}</div>
             <div>Last Name: {user.lastName}</div>
+            <div>
+              <h1>Product</h1>
+              <ul>
+                {product.map((item, i) => {
+                  return (
+                    <li key={i}>
+                      <div className="product">
+                        <div>
+                          <span>{item.id}</span>
+                        </div>
+                        <div>
+                          <span>{item.name}</span>
+                        </div>
+                        <div>
+                          <span>{item.price}</span>
+                        </div>
+                        <button onClick={() => handleaddtocart(item.id)}>
+                          add to cart
+                        </button>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
             <div className="py-2">
               {loggedInUser.username !== user.username && (
                 <button

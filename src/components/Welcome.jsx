@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import product from "../data/product";
 
 const Welcome = () => {
-  console.log(product);
-
   const handleaddtocart = (item) => {
     console.log(item);
   };
