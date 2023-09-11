@@ -27,13 +27,19 @@ const ProductPage = () => {
     );
 
     if (!isEmptyProduct) {
+      const isProductDuplicate = products.some(
+        (product) => product.title === newProduct.title
+      );
+
       if (editIndex !== null) {
         const updatedProducts = [...products];
         updatedProducts[editIndex] = newProduct;
         setProducts(updatedProducts);
         setEditIndex(null);
-      } else {
+      } else if (!isProductDuplicate) {
         setProducts([...products, newProduct]);
+      } else {
+        alert("This product is already exists.");
       }
       setNewProduct({ title: "", description: "", price: "", image: "" });
     } else {
