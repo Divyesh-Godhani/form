@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import product from "../data/product";
 import ProductPage from "./Productpage";
 
 export default function UserProfile() {
@@ -8,6 +7,11 @@ export default function UserProfile() {
     JSON.parse(localStorage.getItem("users")) || []
   );
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "/login";
+  };
 
   if (!loggedInUser) {
     return (
@@ -30,6 +34,10 @@ export default function UserProfile() {
     <div>
       <h1>User Profile</h1>
       <p className="text-green-400">Logged-in User: {loggedInUser.username}</p>
+
+      <button className="py-1 px-2 bg-white" onClick={handleLogout}>
+        Logout
+      </button>
 
       <h2 className="py-3 text-2xl font-bold">All Users Data</h2>
       <ul>
