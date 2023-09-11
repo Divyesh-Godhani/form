@@ -22,20 +22,34 @@ const ProductPage = () => {
   }, [products]);
 
   const handleAddProduct = () => {
-    if (editIndex !== null) {
-      const updatedProducts = [...products];
-      updatedProducts[editIndex] = newProduct;
-      setProducts(updatedProducts);
-      setEditIndex(null);
+    const isEmptyProduct = Object.values(newProduct).some(
+      (value) => value.trim() === ""
+    );
+
+    if (!isEmptyProduct) {
+      if (editIndex !== null) {
+        const updatedProducts = [...products];
+        updatedProducts[editIndex] = newProduct;
+        setProducts(updatedProducts);
+        setEditIndex(null);
+      } else {
+        setProducts([...products, newProduct]);
+      }
+      setNewProduct({ title: "", description: "", price: "", image: "" });
     } else {
-      setProducts([...products, newProduct]);
+      alert("Please fill in all product details.");
     }
-    setNewProduct({ title: "", description: "", price: "", image: "" });
   };
 
   const handleAddToCart = (product) => {
-    setCart([...cart, product]);
-    setTotalPrice(totalPrice + parseFloat(product.price));
+    const isProductInCart = cart.some((item) => item.title === product.title);
+
+    if (!isProductInCart) {
+      setCart([...cart, product]);
+      setTotalPrice(totalPrice + parseFloat(product.price));
+    } else {
+      alert("This product is already in the cart.");
+    }
   };
 
   const handleEditProduct = (index) => {
